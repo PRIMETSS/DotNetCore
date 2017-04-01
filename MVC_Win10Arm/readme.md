@@ -1,4 +1,4 @@
-# H1 dotnet core 2.0 MVC app on Raspberry Pi 3
+# dotnet core 2.0 MVC app on Raspberry Pi 3
 [![N|Solid](https://www.primetss.com.au/Content/images/PTSSLogoSml.gif)](https://www.primetss.com.au)
 
 Install Win10IoT preview v.10.0.15063.0 or greater on your device
@@ -227,12 +227,12 @@ Now you can run it by CD'ing into the publish folder and run
 dotnet C:\Data\Users\administrator\Downloads\publish\MVC_Win10Arm.dll
 ```
 
-# H5 Thats it!
+## Thats it!
 
 ***
 ---
 
-# H5 Other things in PowerShell
+## Other things in PowerShell
 
 To list Environment Variables
 ```sh
