@@ -1,4 +1,4 @@
-# dotnet core 2.0 MVC app on Rasberry Pi 3
+# dotnet core 2.0 MVC app on Raspberry Pi 3
 [![N|Solid](https://www.primetss.com.au/Content/images/PTSSLogoSml.gif)](https://www.primetss.com.au)
 
 Install Win10IoT preview v.10.0.15063.0 or greater on your device
@@ -14,7 +14,7 @@ md MVC_Win10Arm
 cd MVC_Win10Arm
 ```
 
-If running on a Dev machine with multiple dotnetcore SDK's installed you need to create a global.json file so the dotnet.exe muxer will use the preview version 2.X SDK and not default to the latest offical release version the SDK (probably 1.1)
+If running on a Dev machine with multiple dotnetcore SDK's installed, you need to create a global.json file so the dotnet.exe muxer will use the preview version 2.X SDK and not default to the latest official release version the SDK (probably 1.1)
 
 Create a new file global.json
 ```sh
@@ -31,7 +31,7 @@ type dotnet.exe --version
 You should see 
 	2.0.0-preview1-005685
 
-If you dont, check that your global.json file matches what SDK your Dev machine has installed
+If you don’t, check that your global.json file matches what SDK your Dev machine has installed
 eg open folder C:\Program Files\dotnet\sdk and look at the list of installed SDK folders
 
 Create a new dotnetcore MVC application using dotnet.exe 
@@ -40,7 +40,7 @@ On Command Line type
 ```sh
 dotnet new mvc
 ```
-You should now have a dotnet.exe schaffolded basic MVC template
+You should now have a dotnet.exe scaffolded basic MVC template
 
 open the .csproj file
 ```sh
@@ -69,8 +69,8 @@ Before doing a dotnet restore to restore packages create a new NuGet.
 ```sh
 notepad NuGet.config
 ```
-Yes to create new file
-Add this the the blank document and save
+Yes, to create new file
+Add this to the blank document and save
 ```sh
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
@@ -81,7 +81,7 @@ Add this the the blank document and save
 </configuration>
 ```
 
-Now restore the packages using nuget (this will take awhile as it brings down the latest packages from nuget)
+Now restore the packages using nuget (this will take a while as it brings down the latest packages from nuget)
 ```sh
 dotnet restore
 ```
@@ -106,7 +106,7 @@ now lest build the app with
 ```sh
 dotnet.exe build
 ```
-This will build and create the ...\bin\Debug\netcoreapp2.0\ folder and you should see the MVC_Win10Arm.dll (which ou could run with dotnet run MVC_Win10Arm.dll (or corehost.exe MVC_win10Arm.dll)Now lest turn it into a .EXE, as this didnt work for me at first
+This will build and create the ...\bin\Debug\netcoreapp2.0\ folder and you should see the MVC_Win10Arm.dll (which you could run with dotnet run MVC_Win10Arm.dll (or corehost.exe MVC_win10Arm.dll)Now lest turn it into a .EXE, as this didn’t work for me at first
 
 open .csproj
 ```sh
@@ -133,7 +133,7 @@ dotnet.exe build -r win10-arm
 ```
 You get a ..\Debug\netcoreapp2.0\win10-Arm folder with and .exe in it
 
-OK, if this is working, now we need to package it all up with all these depenancies for deplyment to the Win10IoT device
+OK, if this is working, now we need to package it all up with all these dependencies for deployment to the Win10IoT device
 Because of above, maybe issue? use below to publish
 ```sh
 dotnet.exe publish -r win10-arm
@@ -148,7 +148,7 @@ Browse to the folder where you wish to run
 ```
 copy the publish folder and all its content here
 
-Powershell to the device using the Dashboard
+PowerShell to the device using the Dashboard
 or
 
 
@@ -168,7 +168,7 @@ Content root path: C:\Data\Users\administrator\Downloads\publish
 Now listening on: http://localhost:5000
 Application started. Press Ctrl+C to shut down.
 ```
-But because Kestral is default bound to the loopback network adapter, we need to change that so it listens on all adapters
+But because Kestrel is default bound to the loopback network adapter, we need to change that so it listens on all adapters
 Modify Program.cs
 ```sh
 public static void Main(string[] args)
@@ -176,15 +176,15 @@ public static void Main(string[] args)
 var host = new WebHostBuilder()
 .UseKestrel()
 .UseUrls("http://*:5000")
-<<-- Other lines obmitted -->>
+<<-- Other lines omitted -->>
 ```
 Run another publish and copy files to device
 
-Becuase the Win10IoT firewall will block port 5000
+Because the Win10IoT firewall will block port 5000
 either disable it totally (!!) or open a port
 From PowerShell prompt
 ```sh
-netSh advfirewall set allprofiles state off
+netsh advfirewall set allprofiles state off
 or 
 netsh advfirewall firewall add rule name="MVCWin10 Port 5000" dir=in action=allow protocol=TCP localport=5000
 ```
@@ -200,10 +200,10 @@ You should see a MVC web site
 
 Before converting the project into a .EXE I used to use the dotnet runtime and load the MVC_Win10Arm.dll
 This took a bit more work, but you can do it
-Download the lastest Windows(arm32) runtime from
+Download the latest Windows(arm32) runtime from
 https://github.com/dotnet/core-setup#daily-builds
 Extract them
-Create a new folder called runtime, eg md c:\Data\Users\administrator\Downloads\runtime in powershell
+Create a new folder called runtime, eg md c:\Data\Users\administrator\Downloads\runtime in PowerShell
 Copy the extracted contents to this folder on the PI WIN10IoT device
 
 Should contain folders
@@ -214,7 +214,7 @@ to run the .dll, execute (remember to use the full paths)
 ```sh
 C:\Data\Users\administrator\Downloads\runtime\.\dotnet C:\Data\Users\administrator\Downloads\publish\MVC_Win10Arm.dll
 ```
-If you dont want to use the huge paths, perhaps create the following Enviroment Variables on the Pi Win10IOT
+If you don’t want to use the huge paths, perhaps create the following Environment Variables on the Pi Win10IOT
 ```sh
 $env:Path=$(Get-ChildItem env:path).Value + ";C:\Data\Users\administrator\Downloads\runtime"
 ```
@@ -228,12 +228,12 @@ dotnet C:\Data\Users\administrator\Downloads\publish\MVC_Win10Arm.dll
 
 Other things in PowerShell
 
-To list Enviroment Variables
+To list Environment Variables
 ```sh
 Get-ChildItem Env:
 ```
 
-If you would like to get some output out of dotnet while it spins up set Set enviroment variable CoreHost_Trace = 1
+If you would like to get some output out of dotnet while it spins up set environment variable CoreHost_Trace = 1
 ```sh
 $env:COREHOST_TRACE=1
 ```
@@ -248,4 +248,5 @@ DefaultPath String:
 C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Data\Users\administrator\AppData\Local\Microsoft\WindowsApps
 
 Any questions or suggestions
+
 
